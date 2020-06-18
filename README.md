@@ -8,6 +8,6 @@ Example output
 
 ```
 
-saved at:  C:\Users\sgriffiths\AppData\Local\Programs\Python\Python37-32\partis\github\tsvParser
+saved at:  C:\tsvParser
 
 ```
