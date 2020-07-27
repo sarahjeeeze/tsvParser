@@ -1,4 +1,4 @@
-u"""
+"""
 
 Project: FTIRDB
 File: yamlConverter.py
@@ -40,7 +40,7 @@ from io import open
 #need to consider checking the file input is the correct format
 #need to create tests 
 
-start = time.process_time()
+#start = time.process_time()
 
 seq = sys.argv[1]
 
@@ -53,25 +53,26 @@ def openYaml(sequence):
     return(doc)
 
 def extractRequired(yamlFile):
-    fieldNames = [u'v', u'd', u'j']
+    fieldNames = ['v', 'd', 'j']
     dirname = os.path.dirname(os.path.abspath(__file__))
     txt = yamlFile[u"germline-info"][u"seqs"]
     requiredFields = {}
     for field in fieldNames:
-        v = list(txt[field].values())
-        k = field
-        requiredFields[k]=v
+        gene = list(txt[field].keys())
+        sequence = list(txt[field].values())
+        columnname = field
+        requiredFields[columnname]=[gene + sequence]
     
     cdr3 = yamlFile[u"events"][0][u"cdr3_seqs"]
     requiredFields[u'cdr3'] = cdr3
     fieldNames.append(u'cdr3')
-    tsvfilename = os.path.join(dirname, u'TSVFile.tsv')
+    tsvfilename = os.path.join(dirname, 'TSVFile2.tsv')
 
     df = pd.DataFrame(requiredFields)
-    df.to_csv(tsvfilename, sep=u'\t', index=False, header=fieldNames, encoding=u'utf-8')
-    return(u'saved at:  ' + unicode(dirname))
+    df.to_csv(tsvfilename, sep='\t', index=False, header=fieldNames, encoding=u'utf-8')
+    return('saved at:  ' + unicode(dirname))
 
 yaml = openYaml(seq)
 savedFile = extractRequired(yaml)
 print savedFile
-print time.process_time()-start
+
